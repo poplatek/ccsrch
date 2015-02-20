@@ -22,9 +22,8 @@ REM #
 REM # This is a test script that will build, and run ccsrch; if you have the testdata.txt
 REM # file in place, it will pick that up so that you can see the reults.
 REM #
-mingw32-make clean
-mingw32-make all
+REM mingw32-make clean
+REM mingw32-make all
 REM ccsrch -b -T ./
-ccsrch -b -e -T c:\ -c -n .dll,.exe,.dng,.png,.nef,.bmp,.pdf,.wmv,.rtf,.msi,.zip,.7z,.tiff,.tif,.cab,.psd,.jpg,.gif,.jar -o out.txt
-REM ccsrch -b -e -T C:\ -c -l 4 -n .dll,.exe -o NUL
+ccsrch_win32.exe -m -l 100 -b -e -T c:\ -c -n .plist,.class,.svn-base,.eps,.dll,.exe,.dng,.png,.nef,.bmp,.pdf,.wmv,.rtf,.msi,.zip,.7z,.tiff,.tif,.cab,.psd,.jpg,.gif,.jar -o NUL > ccsrch_log.txt
 pause

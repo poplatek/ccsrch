@@ -27,7 +27,7 @@ INCL	= -I./
 OBJS=  ccsrch.o
 LIBSDIR	=  -L./
 LIBS	= 
-PROGS	=ccsrch
+PROGS	=ccsrch ccsrch_osx ccsrch_win32.exe
 
 #this hack is to support OSX
 UNAME := $(shell uname)
@@ -46,10 +46,38 @@ all:	${PROGS}
 ccsrch:	${OBJS}
 	${CC} ${CFLAGS} ${INCL} ${LDFLAGS} ${OBJS} ${LIBSDIR} ${LIBS} -o ccsrch
 
+# You need Win32 cross compiler from http://mxe.cc/#download
+# (or compile natively in Win32 with MinGW with "make")
+#
+# % mkdir ~/ext-git/; cd ~/ext-git
+# % git clone -b stable https://github.com/mxe/mxe.git
+# % cd mxe
+# % make gcc
+# % export PATH=~/ext-git/mxe/usr/bin:$PATH
+# % cd ~/ccsrch
+# % make ccsrch_win32.exe
+ccsrch_win32.exe:
+	CC=i686-pc-mingw32-gcc LD=i686-pc-mingw32-ld AR=i686-pc-mingw32-ar PKG_CONFIG=i686-pc-mingw32-pkg-config i686-pc-mingw32-gcc  -Wall ccsrch.c -o ccsrch_win32.exe
+
+# You need OSX cross compiler from https://github.com/tpoechtrager/osxcross
+# (or compile natively in OSX with "make")
+#
+# % mkdir ~/ext-git/; cd ~/ext-git
+# % git clone https://github.com/tpoechtrager/osxcross
+# % sudo tools/get_dependencies.sh
+# % echo "You need to build MacOSX SDK tarball in a Mac OSX system"
+# % cp ~/MacOSX10.10.sdk.tar.xz tarballs/
+# % ./build.sh
+# % `ext-git/osxcross/target/bin/osxcross-env`
+# % cd ~/ccsrch
+# % make ccsrch_osx
+ccsrch_osx:
+	o64-clang -Wall ccsrch.c -o ccsrch_osx
+
 strict:	${PROGS}
 
 clean:
-	rm -f core *.core ${PROGS} ${OBJS} ccsrch.exe
+	rm -f core *.core ${PROGS} ${OBJS} ccsrch ccsrch_osx ccsrch_win32.exe
 
 .c.o:
 	${CC} ${CFLAGS} ${INCL} -c $<
