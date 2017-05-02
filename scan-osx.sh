@@ -1,0 +1,1 @@
+ls / | egrep -v "^(dev/|sys/|Volumes/)$" | sudo xargs -I {} ./ccsrch_osx -m -l 100 -b -e -c -n .vdi,.plist,.class,.svn-base,.eps,.dll,.exe,.dng,.png,.nef,.bmp,.pdf,.wmv,.rtf,.msi,.zip,.7z,.tiff,.tif,.cab,.psd,.jpg,.gif,.jar,.so,.svg,.tga,.avi,.xcf,.pgm -o /dev/null /{} >> ccsrch_log.txt
