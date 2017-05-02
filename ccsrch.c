@@ -105,7 +105,7 @@ void print_result(char *cardname, int cardlen, long byte_offset)
 
   memset(&buf,'\0',MAXPATH);
   memset(&basebuf,'\0',MDBUFSIZE);
-  
+
   /* Mask the card if specified */
   if (mask_card_number)
     mask_pan(nbuf);
@@ -522,7 +522,7 @@ int get_file_stat(char *inputfile, struct stat * fileattr)
   strncpy(tmp2buf, inputfile, filelen);
 
   errno=0;
-  err = stat(tmp2buf, &ffattr);
+  err = lstat(tmp2buf, &ffattr);
   if (err != 0)
   {
     if (errno == ENOENT)
